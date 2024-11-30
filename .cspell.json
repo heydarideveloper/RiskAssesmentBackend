@@ -1,0 +1,25 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "nestjs",
+    "Mohammadi",
+    "Weightage",
+    "Piranshahr",
+    "Sardasht",
+    "Sistan",
+    "Baluchestan",
+    "Saravan",
+    "Khash",
+    "Sarbaz",
+    "Chabahar",
+    "Qasr",
+    "Shirin",
+    "Mehran",
+    "Hormozgan",
+    "Bandar",
+    "Lengeh",
+    "Minab"
+  ],
+  "ignorePaths": ["node_modules/**", "dist/**"]
+}
