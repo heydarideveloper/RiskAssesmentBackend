@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { CustomerDto } from './dto/customer.dto';
+import { CustomerDto, CustomerType } from './dto/customer.dto';
 import { CustomerFilterDto } from './dto/customer-filter.dto';
 import { RiskSummaryDto } from './dto/risk-summary.dto';
 import { DetailedRiskDto } from './dto/detailed-risk.dto';
@@ -17,7 +17,29 @@ export class RiskAssessmentService {
 
   getFilteredCustomers(filter: CustomerFilterDto): CustomerDto[] {
     // Implementation would typically involve database query
-    return [];
+    // Example implementation:
+    let customers: CustomerDto[] = []; // This would be your database query result
+
+    if (filter.customerType) {
+      customers = customers.filter(c => c.customerType === filter.customerType);
+    }
+
+    if (filter.name) {
+      customers = customers.filter(c => c.name?.toLowerCase().includes(filter.name!.toLowerCase()));
+    }
+
+    if (filter.riskLevel) {
+      customers = customers.filter(c => c.riskLevel === filter.riskLevel);
+    }
+
+    if (filter.companyName) {
+      customers = customers.filter(c => 
+        c.customerType === CustomerType.LEGAL_ENTITY && 
+        c.companyName?.toLowerCase().includes(filter.companyName!.toLowerCase())
+      );
+    }
+
+    return customers;
   }
 
   async getRiskSummary(filter: CustomerFilterDto): Promise<RiskSummaryDto> {
@@ -97,10 +119,11 @@ export class RiskAssessmentService {
       geographicRisk: riskAssessment.components.geographicRisk,
       customerTypeRisk: riskAssessment.components.relationshipRisk,
       activityRisk: riskAssessment.components.businessRisk,
+      financialRisk: riskAssessment.components.financialRisk,
       transactionRisk: riskAssessment.components.transactionRisk,
       pepStatus: customer.isPEP,
       riskFactors: riskAssessment.factors,
-      lastAssessmentDate: new Date(),
+      assessmentDate: new Date(),
       requiredDueDiligence: this.determineRequiredDueDiligence(
         riskAssessment.overallRisk,
       ),

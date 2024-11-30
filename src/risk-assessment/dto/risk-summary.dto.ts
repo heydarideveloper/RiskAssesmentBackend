@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class RiskSummaryDto {
-  @ApiProperty()
+  @ApiProperty({ example: 100, description: 'Total number of customers' })
   totalCustomers: number;
 
-  @ApiProperty()
+  @ApiProperty({ example: 30, description: 'Number of low risk customers' })
   lowRiskCount: number;
 
   @ApiProperty()

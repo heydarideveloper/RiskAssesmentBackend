@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
   IsString,
@@ -15,59 +15,48 @@ export enum CustomerType {
 }
 
 export class CustomerDto {
-  @ApiProperty()
-  @IsNumber()
+  @ApiProperty({ example: 1, description: 'Customer ID' })
   id: number;
 
-  @ApiProperty({ enum: CustomerType })
-  @IsEnum(CustomerType)
-  customerType: CustomerType;
-
-  @ApiProperty({ required: false })
-  @IsString()
+  @ApiPropertyOptional({ example: 'John Doe', description: 'Customer name' })
   @IsOptional()
   name?: string;
 
-  @ApiProperty({ required: false })
-  @IsString()
+  @ApiPropertyOptional({ example: 'ACME Corp', description: 'Company name' })
   @IsOptional()
   companyName?: string;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({ description: 'Unique identity ID' })
   identityUniqueId: string;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({ enum: CustomerType, example: CustomerType.IRANIAN_INDIVIDUAL })
+  customerType: CustomerType;
+
+  @ApiProperty({ enum: RiskLevel, example: RiskLevel.LOW })
+  riskLevel: RiskLevel;
+
+  @ApiProperty({ example: 'Iran', description: 'Nationality of the customer' })
   nationality: string;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({ example: 'Tehran', description: 'Place of birth' })
   birthPlace: string;
 
-  @ApiProperty()
-  @IsString()
+  @ApiProperty({ example: 'Tehran', description: 'Legal residence' })
   legalResidence: string;
 
-  @ApiProperty({ required: false })
-  @IsString()
+  @ApiPropertyOptional({ example: 'Doctor', description: 'Customer occupation' })
   @IsOptional()
   occupation?: string;
 
-  @ApiProperty()
-  @IsBoolean()
-  isPEP: boolean;
-
-  @ApiProperty({ required: false })
-  @IsString()
+  @ApiPropertyOptional({ example: 'Healthcare', description: 'Type of activity' })
   @IsOptional()
   activityType?: string;
 
-  @ApiProperty()
-  @IsNumber()
-  monthlyIncome: number;
+  @ApiPropertyOptional({ example: 50000, description: 'Monthly income' })
+  @IsOptional()
+  monthlyIncome?: number;
 
-  @ApiProperty({ enum: RiskLevel })
-  @IsEnum(RiskLevel)
-  riskLevel: RiskLevel;
+  @ApiPropertyOptional({ example: false, description: 'Is politically exposed person' })
+  @IsOptional()
+  isPEP?: boolean;
 }
